@@ -167,7 +167,7 @@ double Context::pointV(double x) {
         // loads with w(x) = k
         double p1 = x-dl.distance;
         double p2;
-        if (x<dl.distance+dl.length && x>=dl.distance) {
+        if (x<dl.distance+dl.length && x>dl.distance) {
             if (dl.q1 == dl.q2) {
                 vValue += dl.q1*p1;
             } else
@@ -183,7 +183,7 @@ double Context::pointV(double x) {
                 vValue += p1*(dl.q1-(p2/2));
             }
         }
-        if (x>=dl.distance+dl.length && x>=dl.distance) {
+        if (x>=dl.distance+dl.length && x>dl.distance) {
             if (dl.q1 == dl.q2) {
                 vValue += dl.q1*dl.length;
             } else
@@ -213,7 +213,7 @@ double Context::pointM(double x) {
     for (DistributedLoad &dl : distributedLoads) {
         double p1 = x-dl.distance;
         double p2;
-        if (x<dl.distance+dl.length && x>=dl.distance) {
+        if (x<dl.distance+dl.length && x>dl.distance) {
             if (dl.q1 == dl.q2) {
                 mValue += (dl.q1*pow(p1,2))/2;
             } else
@@ -229,13 +229,13 @@ double Context::pointM(double x) {
                 mValue += (pow(p1,2)*(3*dl.q1-p2))/6;
             }
         }
-        if (x>=dl.distance+dl.length && x>=dl.distance) {
+        if (x>=dl.distance+dl.length && x>dl.distance) {
             if (dl.q1 == dl.q2) {
                 mValue += dl.q1*dl.length*(p1-dl.length/2);
             } else
             if (dl.q1 < dl.q2) {
                 p2 = p1*((dl.q2-dl.q1)/dl.length);
-                mValue += dl.q1*dl.length*(p1-dl.length/2)+((dl.length*(dl.q2-dl.q1))/2)*(p1-(2/3)*dl.length);
+                mValue += pow(p1,2)*(3*dl.q1+p2)/6;
             } else
             if (dl.q1 > dl.q2) {
                 p2 = p1*((dl.q1-dl.q2)/dl.length);
