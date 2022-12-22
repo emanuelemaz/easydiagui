@@ -166,37 +166,24 @@ double Context::pointV(double x) {
     for (DistributedLoad &dl : distributedLoads) {
         // loads with w(x) = k
         double p1 = x-dl.distance;
-        double p2;
-        if (x<dl.distance+dl.length && x>dl.distance) {
-            if (dl.q1 == dl.q2) {
-                vValue += dl.q1*p1;
-            } else
-            if (dl.q1 < dl.q2) {
-                p2 = p1*((dl.q2-dl.q1)/dl.length);
-                if (dl.q1==0) {
-                    vValue -= p1*dl.q1;
-                }
-                vValue += p1*(dl.q1+(p2/2));
-            } else
-            if (dl.q1 > dl.q2) {
-                p2 = p1*((dl.q1-dl.q2)/dl.length);
-                vValue += p1*(dl.q1-(p2/2));
+        if (x<=dl.distance+dl.length && x>dl.distance) {
+            // rectangular or trapezoid
+            if (dl.q1==dl.q2 || (dl.q1 != dl.q2 && dl.q1 != 0 && dl.q2 != 0)) {
+                vValue += (dl.q1)*p1;
+            }
+            // triangular or trapezoid
+            if (dl.q1 != dl.q2 || (dl.q1 == 0 || dl.q2 == 0)) {
+                vValue += ((dl.q2-dl.q1)/(2*dl.length))*pow(p1,2);
             }
         }
-        if (x>=dl.distance+dl.length && x>dl.distance) {
-            if (dl.q1 == dl.q2) {
-                vValue += dl.q1*dl.length;
-            } else
-            if (dl.q1 < dl.q2) {
-                p2 = p1*((dl.q2-dl.q1)/dl.length);
-                vValue += ((dl.q1+dl.q2)*dl.length)/2;
-            } else
-            if (dl.q1 > dl.q2) {
-                p2 = p1*((dl.q1-dl.q2)/dl.length);
-                if (dl.q1==0) {
-                    vValue -= dl.q2*dl.length;
-                }
-                vValue += dl.q2*dl.length+(dl.length*(dl.q1-dl.q2))/2;
+        if (x>dl.distance+dl.length) {
+            // rectangular or trapezoid
+            if (dl.q1==dl.q2 || (dl.q1 != dl.q2 && dl.q1 != 0 && dl.q2 != 0)) {
+                vValue += (dl.q1)*dl.length;
+            }
+            // triangular or trapezoid
+            if (dl.q1 != dl.q2 || (dl.q1 == 0 || dl.q2 == 0)) {
+                vValue += (dl.q2-dl.q1)*dl.length/2;
             }
         }
     }
@@ -212,37 +199,24 @@ double Context::pointM(double x) {
     }
     for (DistributedLoad &dl : distributedLoads) {
         double p1 = x-dl.distance;
-        double p2;
-        if (x<dl.distance+dl.length && x>dl.distance) {
-            if (dl.q1 == dl.q2) {
-                mValue += (dl.q1*pow(p1,2))/2;
-            } else
-            if (dl.q1 < dl.q2) {
-                p2 = p1*((dl.q2-dl.q1)/dl.length);
-                if (dl.q1==0) {
-                    mValue -= (dl.q1*pow(p1,2))/2;
-                }
-                mValue += (pow(p1,2)*(3*dl.q1+p2))/6;
-            } else
-            if (dl.q1 > dl.q2) {
-                p2 = p1*((dl.q1-dl.q2)/dl.length);
-                mValue += (pow(p1,2)*(3*dl.q1-p2))/6;
+        if (x<=dl.distance+dl.length && x>dl.distance) {
+            // rectangular or trapezoid
+            if (dl.q1==dl.q2 || (dl.q1 != dl.q2 && dl.q1 != 0 && dl.q2 != 0)) {
+                mValue += (dl.q1/2)*pow(p1,2);
+            }
+            // triangular or trapezoid
+            if (dl.q1 != dl.q2 || (dl.q1 == 0 || dl.q2 == 0)) {
+                mValue += ((dl.q2-dl.q1)/(6*dl.length))*pow(p1,3);
             }
         }
-        if (x>=dl.distance+dl.length && x>dl.distance) {
-            if (dl.q1 == dl.q2) {
-                mValue += dl.q1*dl.length*(p1-dl.length/2);
-            } else
-            if (dl.q1 < dl.q2) {
-                p2 = p1*((dl.q2-dl.q1)/dl.length);
-                mValue += pow(p1,2)*(3*dl.q1+p2)/6;
-            } else
-            if (dl.q1 > dl.q2) {
-                p2 = p1*((dl.q1-dl.q2)/dl.length);
-                if (dl.q1==0) {
-                    mValue -= dl.length*dl.q2*(3*p1-2*dl.length)/6;
-                }
-                mValue += dl.q2*dl.length*(p1-dl.length/2)+((dl.length*(dl.q1-dl.q2))/2)*(p1-dl.length/3);
+        if (x>dl.distance+dl.length) {
+            // rectangular or trapezoid
+            if (dl.q1==dl.q2 || (dl.q1 != dl.q2 && dl.q1 != 0 && dl.q2 != 0)) {
+                mValue += (dl.q1/2)*pow(dl.length,2)+dl.q1*dl.length*(p1-dl.length);
+            }
+            // triangular or trapezoid
+            if (dl.q1 != dl.q2 || (dl.q1 == 0 || dl.q2 == 0)) {
+                mValue += (dl.q2-dl.q1)/6*pow(dl.length,2)+((dl.q2-dl.q1)*dl.length/2)*(p1-dl.length);
             }
         }
     }
