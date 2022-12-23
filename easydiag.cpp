@@ -24,6 +24,7 @@ DistributedLoad::DistributedLoad(double val1, double val2, double d, double l) {
     length = l;
 }
 
+Context::Context() {};
 Context::Context(Beam b,
                  std::vector<PointLoad> v,
                  std::vector<PointLoad> h,

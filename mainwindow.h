@@ -22,12 +22,19 @@ public:
     Context createCtx();
 
 private slots:
-    void on_beamBtn_clicked();
     void on_pointLoadBtn_clicked();
     void on_distributedLoadBtn_clicked();
 
     void on_pointMomentBtn_clicked();
     void on_diagBtn_clicked();
+
+    void on_beamSpinBox_valueChanged(double arg1);
+
+    void on_clrPl_clicked();
+
+    void on_clrDl_clicked();
+
+    void on_clrPm_clicked();
 
 private:
     Ui::MainWindow *ui;

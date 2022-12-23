@@ -13,7 +13,7 @@ class PointMomentDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PointMomentDialog(QWidget *parent = nullptr);
+    explicit PointMomentDialog(double &beamL, QWidget *parent = nullptr);
     ~PointMomentDialog();
     PointMoment moment[1];
 

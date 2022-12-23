@@ -82,6 +82,7 @@ class Context {
         std::vector<DistributedLoad> distributedLoads;
         std::vector<PointMoment> pointMoments;
         double dx = 0.0005;
+        Context();
         Context(Beam b,
                 std::vector<PointLoad> v,
                 std::vector<PointLoad> h,

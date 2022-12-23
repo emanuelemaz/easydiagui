@@ -3,11 +3,12 @@
 
 #include "easydiag.h"
 
-DistributedLoadDialog::DistributedLoadDialog(QWidget *parent) :
+DistributedLoadDialog::DistributedLoadDialog(double &beamL, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DistributedLoadDialog)
 {
     ui->setupUi(this);
+    lbeamL = beamL;
 
     ui->q1SpinBox->setDecimals(4);
     ui->q1SpinBox->setMaximum(std::numeric_limits<double>::max());
@@ -16,7 +17,7 @@ DistributedLoadDialog::DistributedLoadDialog(QWidget *parent) :
     ui->q2SpinBox->setMaximum(std::numeric_limits<double>::max());
     ui->q2SpinBox->setMinimum(std::numeric_limits<double>::max()*(-1));
     ui->distanceSpinBox->setDecimals(4);
-    ui->distanceSpinBox->setMaximum(std::numeric_limits<double>::max());
+    ui->distanceSpinBox->setMaximum(lbeamL);
     ui->distanceSpinBox->setMinimum(0);
     ui->lengthSpinBox->setDecimals(4);
     ui->lengthSpinBox->setMaximum(std::numeric_limits<double>::max());
@@ -31,5 +32,11 @@ DistributedLoadDialog::~DistributedLoadDialog()
 void DistributedLoadDialog::on_buttonBox_accepted()
 {
     load[0] = DistributedLoad(ui->q1SpinBox->value(),ui->q2SpinBox->value(),ui->distanceSpinBox->value(),ui->lengthSpinBox->value());
+}
+
+
+void DistributedLoadDialog::on_distanceSpinBox_valueChanged(double d)
+{
+    ui->lengthSpinBox->setMaximum(lbeamL-d);
 }
 

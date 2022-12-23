@@ -4,7 +4,7 @@
 #include <limits>
 #include <QButtonGroup>
 
-PointLoadDialog::PointLoadDialog(QWidget *parent) :
+PointLoadDialog::PointLoadDialog(double &beamL, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PointLoadDialog)
 {
@@ -16,7 +16,7 @@ PointLoadDialog::PointLoadDialog(QWidget *parent) :
 
     ui->angleValue->setMaximum(std::numeric_limits<double>::max());
     ui->doubleSpinBox->setMaximum(std::numeric_limits<double>::max());
-    ui->doubleSpinBox_2->setMaximum(std::numeric_limits<double>::max());
+    ui->doubleSpinBox_2->setMaximum(beamL);
 
     ui->doubleSpinBox->setMinimum(std::numeric_limits<double>::max()*(-1));
     ui->doubleSpinBox_2->setMinimum(0);

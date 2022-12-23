@@ -14,7 +14,7 @@ class PointLoadDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PointLoadDialog(QWidget *parent = nullptr);
+    explicit PointLoadDialog(double &beamL, QWidget *parent = nullptr);
     ~PointLoadDialog();
 
     QButtonGroup *directionSelection;

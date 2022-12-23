@@ -26,24 +26,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_beamBtn_clicked()
-{
-    if (ui->beamSpinBox->value() == 0) {
-        QMessageBox::warning(this, "Warning", "The length of the beam must be greater than 0.", QMessageBox::Ok);
-    } else {
-        b.length = ui->beamSpinBox->value();
-        ui->pointLoadBtn->setEnabled(true);
-        ui->distributedLoadBtn->setEnabled(true);
-        ui->pointMomentBtn->setEnabled(true);
-        ui->diagBtn->setEnabled(true);
-    }
-}
-
-
 void MainWindow::on_pointLoadBtn_clicked()
 {
-    pldialog = new PointLoadDialog();
+    double beamLength = ui->beamSpinBox->value();
+    pldialog = new PointLoadDialog(beamLength);
     int result = pldialog->exec();
     if (result == QDialog::Accepted) {
         ui->pointLoadsTbl->setRowCount(0);
@@ -84,7 +70,8 @@ void MainWindow::on_pointLoadBtn_clicked()
 
 void MainWindow::on_distributedLoadBtn_clicked()
 {
-    dldialog = new DistributedLoadDialog();
+    double beamLength = ui->beamSpinBox->value();
+    dldialog = new DistributedLoadDialog(beamLength);
     int result = dldialog->exec();
     if (result == QDialog::Accepted) {
         ui->distributedLoadsTbl->setRowCount(0);
@@ -110,7 +97,8 @@ void MainWindow::on_distributedLoadBtn_clicked()
 
 void MainWindow::on_pointMomentBtn_clicked()
 {
-    pmdialog = new PointMomentDialog();
+    double beamLength = ui->beamSpinBox->value();
+    pmdialog = new PointMomentDialog(beamLength);
     int result = pmdialog->exec();
     if (result == QDialog::Accepted) {
         ui->pointMomentsTbl->setRowCount(0);
@@ -137,5 +125,41 @@ void MainWindow::on_diagBtn_clicked()
     Context ctx = createCtx();
     dview = new DiagView(ctx);
     dview->exec();
+}
+
+
+void MainWindow::on_beamSpinBox_valueChanged(double arg1)
+{
+    if (ui->beamSpinBox->value() == 0) {
+        QMessageBox::warning(this, "Warning", "The length of the beam must be greater than 0.", QMessageBox::Ok);
+    } else {
+        b.length = ui->beamSpinBox->value();
+        ui->pointLoadBtn->setEnabled(true);
+        ui->distributedLoadBtn->setEnabled(true);
+        ui->pointMomentBtn->setEnabled(true);
+        ui->diagBtn->setEnabled(true);
+    }
+}
+
+
+void MainWindow::on_clrPl_clicked()
+{
+    verticalForces.clear();
+    horizontalForces.clear();
+    ui->pointLoadsTbl->setRowCount(0);
+}
+
+
+void MainWindow::on_clrDl_clicked()
+{
+    distributedLoads.clear();
+    ui->distributedLoadsTbl->setRowCount(0);
+}
+
+
+void MainWindow::on_clrPm_clicked()
+{
+    pointMoments.clear();
+    ui->pointMomentsTbl->setRowCount(0);
 }
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
+    <width>184</width>
     <height>107</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
    <item row="0" column="1">
     <widget class="QDoubleSpinBox" name="doubleSpinBox">
      <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
+      <locale language="English" country="UnitedStates"/>
      </property>
      <property name="decimals">
       <number>2</number>
@@ -50,7 +50,7 @@
    <item row="1" column="1">
     <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
      <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
+      <locale language="English" country="UnitedStates"/>
      </property>
      <property name="decimals">
       <number>2</number>

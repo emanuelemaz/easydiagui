@@ -3,7 +3,7 @@
 
 #include "easydiag.h"
 
-PointMomentDialog::PointMomentDialog(QWidget *parent) :
+PointMomentDialog::PointMomentDialog(double &beamL, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PointMomentDialog)
 {
@@ -13,7 +13,7 @@ PointMomentDialog::PointMomentDialog(QWidget *parent) :
     ui->doubleSpinBox_2->setDecimals(4);
 
     ui->doubleSpinBox->setMaximum(std::numeric_limits<double>::max());
-    ui->doubleSpinBox_2->setMaximum(std::numeric_limits<double>::max());
+    ui->doubleSpinBox_2->setMaximum(beamL);
 
     ui->doubleSpinBox->setMinimum(std::numeric_limits<double>::max()*(-1));
     ui->doubleSpinBox_2->setMinimum(0);

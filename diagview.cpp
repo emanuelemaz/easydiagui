@@ -11,6 +11,13 @@ DiagView::DiagView(Context &ctx, QWidget *parent) :
     ui(new Ui::DiagView)
 {
     ui->setupUi(this);
+
+    ui->doubleSpinBox->setDecimals(4);
+    ui->doubleSpinBox->setMaximum(ctx.beam.length);
+    ui->doubleSpinBox->setMinimum(0);
+
+    lCtx = ctx;
+
     std::pair<std::vector<double>,std::vector<double>> xyH = ctx.getHpair();
     std::pair<std::vector<double>,std::vector<double>> xyT = ctx.getTpair();
     std::pair<std::vector<double>,std::vector<double>> xyM = ctx.getMpair();
@@ -24,7 +31,7 @@ DiagView::DiagView(Context &ctx, QWidget *parent) :
     ui->diagHPlot->replot();
     ui->diagHPlot->rescaleAxes(true);
     ui->diagHPlot->xAxis->setLabel("Beam");
-    ui->diagHPlot->yAxis->setLabel("Shear force");
+    ui->diagHPlot->yAxis->setLabel("Axial force");
     ui->diagHPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
     ui->diagTPlot->addGraph();
@@ -46,7 +53,7 @@ DiagView::DiagView(Context &ctx, QWidget *parent) :
     ui->diagMPlot->replot();
     ui->diagMPlot->rescaleAxes(true);
     ui->diagMPlot->xAxis->setLabel("Beam");
-    ui->diagMPlot->yAxis->setLabel("Shear force");
+    ui->diagMPlot->yAxis->setLabel("Bending moment");
     ui->diagMPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 }
 
@@ -54,3 +61,11 @@ DiagView::~DiagView()
 {
     delete ui;
 }
+
+void DiagView::on_doubleSpinBox_valueChanged(double x)
+{
+    ui->axialIn->setText(QString::fromStdString(std::to_string(lCtx.pointH(x))));
+    ui->shearIn->setText(QString::fromStdString(std::to_string(lCtx.pointV(x))));
+    ui->momentIn->setText(QString::fromStdString(std::to_string(lCtx.pointM(x)*(-1))));
+}
+
