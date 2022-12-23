@@ -128,12 +128,12 @@ void MainWindow::on_diagBtn_clicked()
 }
 
 
-void MainWindow::on_beamSpinBox_valueChanged(double arg1)
+void MainWindow::on_beamSpinBox_valueChanged(double bl)
 {
     if (ui->beamSpinBox->value() == 0) {
         QMessageBox::warning(this, "Warning", "The length of the beam must be greater than 0.", QMessageBox::Ok);
     } else {
-        b.length = ui->beamSpinBox->value();
+        b.length = bl;
         ui->pointLoadBtn->setEnabled(true);
         ui->distributedLoadBtn->setEnabled(true);
         ui->pointMomentBtn->setEnabled(true);
@@ -161,5 +161,39 @@ void MainWindow::on_clrPm_clicked()
 {
     pointMoments.clear();
     ui->pointMomentsTbl->setRowCount(0);
+}
+
+void MainWindow::on_clrPlSel_clicked()
+{
+    if (ui->pointLoadsTbl->selectedItems().empty()) {return;}
+
+    int selectedPl = ui->pointLoadsTbl->selectedItems()[0]->row();
+
+    if (ui->pointLoadsTbl->item(selectedPl, 2)->text() == "Horizontal") {
+        horizontalForces.erase(horizontalForces.begin() + selectedPl);
+    } else {
+        verticalForces.erase(verticalForces.begin() + selectedPl);
+    }
+
+    ui->pointLoadsTbl->removeRow(selectedPl);
+}
+
+void MainWindow::on_clrDlSel_clicked()
+{
+    if (ui->distributedLoadsTbl->selectedItems().empty()) {return;}
+    int selectedPl = ui->distributedLoadsTbl->selectedItems()[0]->row();
+    distributedLoads.erase(distributedLoads.begin() + selectedPl);
+    ui->distributedLoadsTbl->removeRow(selectedPl);
+}
+
+
+
+
+void MainWindow::on_clrPmSel_clicked()
+{
+    if (ui->pointMomentsTbl->selectedItems().empty()) {return;}
+    int selectedPl = ui->pointMomentsTbl->selectedItems()[0]->row();
+    pointMoments.erase(pointMoments.begin() + selectedPl);
+    ui->pointMomentsTbl->removeRow(selectedPl);
 }
 

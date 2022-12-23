@@ -150,7 +150,7 @@ double Context::pointH(double x) {
         if (x == beam.length) {
             hValue -= hl.value;
         }
-        else if (hl.distance<x) {
+        else if (hl.distance<=x) {
             hValue -= hl.value;
         }
     }

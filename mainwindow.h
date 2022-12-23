@@ -36,6 +36,12 @@ private slots:
 
     void on_clrPm_clicked();
 
+    void on_clrPlSel_clicked();
+
+    void on_clrDlSel_clicked();
+
+    void on_clrPmSel_clicked();
+
 private:
     Ui::MainWindow *ui;
     PointLoadDialog *pldialog;
