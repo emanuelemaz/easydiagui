@@ -172,9 +172,18 @@ double Context::pointV(double x) {
             if (dl.q1==dl.q2 || (dl.q1 != dl.q2 && dl.q1 != 0 && dl.q2 != 0)) {
                 vValue += (dl.q1)*p1;
             }
-            // triangular or trapezoid
-            if (dl.q1 != dl.q2 || (dl.q1 == 0 || dl.q2 == 0)) {
+            // trapezoid
+            if (dl.q1 != dl.q2 && dl.q1 !=0 && dl.q2 != 0) {
                 vValue += ((dl.q2-dl.q1)/(2*dl.length))*pow(p1,2);
+            }
+            // triangular
+            if (dl.q1 == 0 || dl.q2 == 0) {
+                if (dl.q1==0) {
+                    vValue += dl.q2/(2*dl.length)*pow(p1,2);
+                }
+                if (dl.q2==0) {
+                    vValue += -dl.q1/(2*dl.length)*pow(p1,2)+dl.q1*p1;
+                }
             }
         }
         if (x>dl.distance+dl.length) {
@@ -182,9 +191,18 @@ double Context::pointV(double x) {
             if (dl.q1==dl.q2 || (dl.q1 != dl.q2 && dl.q1 != 0 && dl.q2 != 0)) {
                 vValue += (dl.q1)*dl.length;
             }
-            // triangular or trapezoid
-            if (dl.q1 != dl.q2 || (dl.q1 == 0 || dl.q2 == 0)) {
+            // trapezoid
+            if (dl.q1 != dl.q2 && dl.q1 !=0 && dl.q2 != 0) {
                 vValue += (dl.q2-dl.q1)*dl.length/2;
+            }
+            // triangular
+            if (dl.q1 == 0 || dl.q2 == 0) {
+                if (dl.q1==0) {
+                    vValue += (dl.q2*dl.length)/2;
+                }
+                if (dl.q2==0) {
+                    vValue += (dl.q1*dl.length)/2;
+                }
             }
         }
     }
@@ -205,9 +223,17 @@ double Context::pointM(double x) {
             if (dl.q1==dl.q2 || (dl.q1 != dl.q2 && dl.q1 != 0 && dl.q2 != 0)) {
                 mValue += (dl.q1/2)*pow(p1,2);
             }
-            // triangular or trapezoid
-            if (dl.q1 != dl.q2 || (dl.q1 == 0 || dl.q2 == 0)) {
+            // trapezoid
+            if (dl.q1 != dl.q2 && dl.q1 !=0 && dl.q2 != 0) {
                 mValue += ((dl.q2-dl.q1)/(6*dl.length))*pow(p1,3);
+            }
+            if (dl.q1 == 0 || dl.q2 == 0) {
+                if (dl.q1==0) {
+                    mValue += dl.q2/(6*dl.length)*pow(p1,3);
+                }
+                if (dl.q2==0) {
+                    mValue += -dl.q1/(6*dl.length)*pow(p1,3)+(dl.q1/2)*pow(p1,2);
+                }
             }
         }
         if (x>dl.distance+dl.length) {
@@ -215,9 +241,18 @@ double Context::pointM(double x) {
             if (dl.q1==dl.q2 || (dl.q1 != dl.q2 && dl.q1 != 0 && dl.q2 != 0)) {
                 mValue += (dl.q1/2)*pow(dl.length,2)+dl.q1*dl.length*(p1-dl.length);
             }
-            // triangular or trapezoid
-            if (dl.q1 != dl.q2 || (dl.q1 == 0 || dl.q2 == 0)) {
+            // trapezoid
+            if (dl.q1 != dl.q2 && dl.q1 !=0 && dl.q2 != 0) {
                 mValue += (dl.q2-dl.q1)/6*pow(dl.length,2)+((dl.q2-dl.q1)*dl.length/2)*(p1-dl.length);
+            }
+            // triangular
+            if (dl.q1 == 0 || dl.q2 == 0) {
+                if (dl.q1==0) {
+                    mValue += ((dl.q2*dl.length)/2)*(p1-dl.length)+(dl.q2/6)*pow(dl.length,2);
+                }
+                if (dl.q2==0) {
+                    mValue += ((dl.q1*dl.length)/2)*(p1-dl.length)+(dl.q1/3)*pow(dl.length,2);
+                }
             }
         }
     }
