@@ -124,6 +124,7 @@ void MainWindow::on_diagBtn_clicked()
 {
     Context ctx = createCtx();
     dview = new DiagView(ctx);
+    dview->setWindowFlags(Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
     dview->exec();
 }
 

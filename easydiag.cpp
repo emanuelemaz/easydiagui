@@ -52,7 +52,7 @@ std::vector<std::pair<double, double>> Context::hPoints() {
     double randomDist;
     while (randomDist<=beam.length) {
         hp.push_back(randomDist);
-        randomDist += 0.10;
+        randomDist += 0.3;
     }
 
     hp.push_back(beam.length);
@@ -88,7 +88,7 @@ std::vector<std::pair<double, double>> Context::vPoints() {
     double randomDist;
     while (randomDist<=beam.length) {
         vp.push_back(randomDist);
-        randomDist += 0.10;
+        randomDist += 0.30;
     }
 
     vp.push_back(beam.length);
@@ -127,7 +127,7 @@ std::vector<std::pair<double,double>> Context::mPoints() {
     double randomDist;
     while (randomDist<=beam.length) {
         mp.push_back(randomDist);
-        randomDist += 0.10;
+        randomDist += 0.30;
     }
 
     mp.push_back(beam.length);

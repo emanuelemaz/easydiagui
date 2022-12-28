@@ -80,23 +80,28 @@ void DiagView::on_doubleSpinBox_valueChanged(double x)
 
 void DiagView::on_saveH_clicked()
 {
+    ui->diagHPlot->graph(1)->setAdaptiveSampling(false);
     ui->diagHPlot->xAxis->setRange(-lCtx.beam.length*0.2, lCtx.beam.length*1.2);
     ui->diagHPlot->yAxis->setRange(1.2 * yHmin, 1.2 * yHmax );
     ui->diagHPlot->savePdf("axial.pdf", 600, 600, QCP::epNoCosmetic);
+    ui->diagHPlot->graph(1)->setAdaptiveSampling(true);
 }
 
 void DiagView::on_saveT_clicked()
 {
+    ui->diagTPlot->graph(1)->setAdaptiveSampling(false);
     ui->diagTPlot->xAxis->setRange(-lCtx.beam.length*0.2, lCtx.beam.length*1.2);
     ui->diagTPlot->yAxis->setRange(1.2 * yTmin, 1.2 * yTmax );
     ui->diagTPlot->savePdf("shear.pdf", 600, 600, QCP::epNoCosmetic);
-
+    ui->diagTPlot->graph(1)->setAdaptiveSampling(true);
 }
 
 void DiagView::on_saveM_clicked()
 {
+    ui->diagMPlot->graph(1)->setAdaptiveSampling(false);
     ui->diagMPlot->xAxis->setRange(-lCtx.beam.length*0.2, lCtx.beam.length*1.2);
     ui->diagMPlot->yAxis->setRange(1.2 * yMmin, 1.2 * yMmax );
     ui->diagMPlot->savePdf("moment.pdf", 600, 600, QCP::epNoCosmetic);
+    ui->diagMPlot->graph(1)->setAdaptiveSampling(true);
 }
 
