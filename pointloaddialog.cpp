@@ -3,6 +3,7 @@
 
 #include <limits>
 #include <QButtonGroup>
+#include <cmath>
 
 PointLoadDialog::PointLoadDialog(double &beamL, QWidget *parent) :
     QDialog(parent),

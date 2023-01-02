@@ -6,7 +6,6 @@
 #include <vector>
 #include <limits>
 #include <algorithm>
-#include <gnuplot-iostream.h>
 
 /**
  * @brief

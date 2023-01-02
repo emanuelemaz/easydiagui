@@ -1,4 +1,5 @@
 #include "easydiag.h"
+#include <cmath>
 
 Beam::Beam(double l) {
     length = l;
