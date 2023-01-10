@@ -86,6 +86,11 @@
         <string>Direction</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>Index</string>
+       </property>
+      </column>
      </widget>
     </item>
     <item row="3" column="0">

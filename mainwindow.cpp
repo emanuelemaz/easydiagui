@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->beamSpinBox->setDecimals(4);
     ui->beamSpinBox->setMinimum(std::numeric_limits<double>::max()*(-1));
     ui->beamSpinBox->setMaximum(std::numeric_limits<double>::max());
-
+    ui->pointLoadsTbl->setColumnHidden(3, true);
 }
 
 MainWindow::~MainWindow()
@@ -40,7 +40,7 @@ void MainWindow::on_pointLoadBtn_clicked()
                 horizontalForces.push_back(f.first);
             }
         }
-        for (std::vector<PointLoad>::size_type i = 0; i < verticalForces.size(); i++) {
+        for (int i = 0; i < verticalForces.size(); i++) {
             ui->pointLoadsTbl->insertRow(ui->pointLoadsTbl->rowCount());
             QTableWidgetItem *valueItem = new QTableWidgetItem();
             valueItem->setData(Qt::EditRole, (verticalForces[i].value));
@@ -48,11 +48,14 @@ void MainWindow::on_pointLoadBtn_clicked()
             distanceItem->setData(Qt::EditRole, (verticalForces[i].distance));
             QTableWidgetItem *directionItem = new QTableWidgetItem();
             directionItem->setText("Vertical");
+            QTableWidgetItem *indexItem = new QTableWidgetItem();
+            indexItem->setData(Qt::EditRole, i);
             ui->pointLoadsTbl->setItem(ui->pointLoadsTbl->rowCount()-1,0, valueItem);
             ui->pointLoadsTbl->setItem(ui->pointLoadsTbl->rowCount()-1,1, distanceItem);
             ui->pointLoadsTbl->setItem(ui->pointLoadsTbl->rowCount()-1,2, directionItem);
+            ui->pointLoadsTbl->setItem(ui->pointLoadsTbl->rowCount()-1,3, indexItem);
         }
-        for (std::vector<PointLoad>::size_type i = 0; i < horizontalForces.size(); i++) {
+        for (int i = 0; i < horizontalForces.size(); i++) {
             ui->pointLoadsTbl->insertRow(ui->pointLoadsTbl->rowCount());
             QTableWidgetItem *valueItem = new QTableWidgetItem();
             valueItem->setData(Qt::EditRole, (horizontalForces[i].value));
@@ -60,9 +63,12 @@ void MainWindow::on_pointLoadBtn_clicked()
             distanceItem->setData(Qt::EditRole, (horizontalForces[i].distance));
             QTableWidgetItem *directionItem = new QTableWidgetItem();
             directionItem->setText("Horizontal");
+            QTableWidgetItem *indexItem = new QTableWidgetItem();
+            indexItem->setData(Qt::EditRole, i);
             ui->pointLoadsTbl->setItem(ui->pointLoadsTbl->rowCount()-1,0, valueItem);
             ui->pointLoadsTbl->setItem(ui->pointLoadsTbl->rowCount()-1,1, distanceItem);
             ui->pointLoadsTbl->setItem(ui->pointLoadsTbl->rowCount()-1,2, directionItem);
+            ui->pointLoadsTbl->setItem(ui->pointLoadsTbl->rowCount()-1,3, indexItem);
         }
     }
 }
@@ -168,7 +174,7 @@ void MainWindow::on_clrPlSel_clicked()
 {
     if (ui->pointLoadsTbl->selectedItems().empty()) {return;}
 
-    int selectedPl = ui->pointLoadsTbl->selectedItems()[0]->row();
+    int selectedPl = ui->pointLoadsTbl->item(ui->pointLoadsTbl->selectedItems()[0]->row(),3)->text().toInt();
 
     if (ui->pointLoadsTbl->item(selectedPl, 2)->text() == "Horizontal") {
         horizontalForces.erase(horizontalForces.begin() + selectedPl);
@@ -176,7 +182,7 @@ void MainWindow::on_clrPlSel_clicked()
         verticalForces.erase(verticalForces.begin() + selectedPl);
     }
 
-    ui->pointLoadsTbl->removeRow(selectedPl);
+    ui->pointLoadsTbl->removeRow(ui->pointLoadsTbl->selectedItems()[0]->row());
 }
 
 void MainWindow::on_clrDlSel_clicked()
