@@ -176,7 +176,7 @@ void MainWindow::on_clrPlSel_clicked()
 
     int selectedPl = ui->pointLoadsTbl->item(ui->pointLoadsTbl->selectedItems()[0]->row(),3)->text().toInt();
 
-    if (ui->pointLoadsTbl->item(selectedPl, 2)->text() == "Horizontal") {
+    if (ui->pointLoadsTbl->item(ui->pointLoadsTbl->selectedItems()[0]->row(), 2)->text() == "Horizontal") {
         horizontalForces.erase(horizontalForces.begin() + selectedPl);
     } else {
         verticalForces.erase(verticalForces.begin() + selectedPl);
